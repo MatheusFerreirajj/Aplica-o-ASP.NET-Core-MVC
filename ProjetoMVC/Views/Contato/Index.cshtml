@@ -1,0 +1,57 @@
+﻿@model List<ContatoModel>
+
+@{
+    ViewData["Title"] = "Listagem de Contatos";
+    Layout = "~/Views/Shared/_LayoutContato.cshtml";
+}
+
+<div class="text-center">
+
+    <h1>Listagem de Contatos</h1>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="color:white">
+        <a class="btn btn-success" id="Cadastrar" name="Cadastrar" role="button" asp-action="Cadastro" asp-controller="Contato">Adicionar novo contato</a>
+    </div>
+    <br />
+
+    <table class="table" style="border-radius: 17px;">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Email</th>
+                <th scope="col">Celular</th>
+                <th scope="col">
+
+                </th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@item.Id</th>
+                    <td>@item.Nome</td>
+                    <td>@item.Email</td>
+                    <td>@item.Celular</td>
+                    <td>
+                        <div class="btn-group" role="group" style="color: white; display:flex;">
+                            <div class="col-6" style="text-align: end;">
+                                <a role="button" class="btn btn-primary" asp-controller="Contato" asp-action="CarregaContato" asp-route-id="@item.Id">Editar</a>
+                            </div>
+                            <div class="col-6" style="text-align: start;">
+                                <a role="button" class="btn btn-danger" onclick="ApagarContato('@item.Id')">Apagar</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+<script>
+
+</script>
+

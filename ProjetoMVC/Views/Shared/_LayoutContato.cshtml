@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ProjetoMVC</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ProjetoMVC</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Contato" asp-action="Index">Contatos</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <div class="aguarde-bg" id="aguarde" style="z-index: 1060">
+        <div class="aguarde">
+            <p>AGUARDE...</p>
+            <div class="aguarde-gif">
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - ProjetoMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <link href="~/css/argon-dashboard.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+    </script>
+
+    <script>
+        function recarregarPagina() {
+            setTimeout(function () {
+                location.reload();
+            }, 2000);
+        }
+
+        function ApagarContato(id) {
+            $.ajax({
+                url: "@Url.Action("RemoverContato", "Contato")",
+                type: 'GET',
+                data: { id: id },
+                beforeSend: function () {
+                    var load = document.getElementById("aguarde")
+                    load.style.display = "flex";
+                },
+            }).done(function (data) {
+                var load = document.getElementById("aguarde")
+                load.style.display = "none";
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Contato excluído com sucesso!'
+                });
+
+            }).fail(function (data) {
+                var load = document.getElementById("aguarde")
+                load.style.display = "none";
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Erro ao excluir!'
+                });
+            });
+            recarregarPagina();
+        }
+
+        function EditarContato(id){
+            var dados = $("#Contato").serialize();
+            $.ajax({
+                url: "@Url.Action("EditarContato", "Contato")",
+                type: 'PUT',
+                data: dados,
+                beforeSend: function () {
+                    var load = document.getElementById("aguarde")
+                    load.style.display = "flex";
+                },
+            }).done(function (data) {
+                var load = document.getElementById("aguarde")
+                load.style.display = "none";
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Contato editado com sucesso!'
+                });
+
+            }).fail(function (data) {
+                var load = document.getElementById("aguarde")
+                load.style.display = "none";
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Erro ao editar!'
+                });
+            });
+            
+        }
+
+        function CadastrarContatos() {
+            var dados = $("#Contato").serialize();
+            $.ajax({
+                url: "@Url.Action("CadastrarContato", "Contato")",
+                type: 'POST',
+                data: dados,
+                beforeSend: function () {
+                    var load = document.getElementById("aguarde")
+                    load.style.display = "flex";
+                },
+            }).done(function (data) {
+                var load = document.getElementById("aguarde")
+                load.style.display = "none";
+                console.log("To aqui ein");
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Cadastro concluído!'
+                });
+
+            }).fail(function (data) {
+                var load = document.getElementById("aguarde")
+                load.style.display = "none";
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Erro ao cadastrar!'
+                });
+            });
+            recarregarPagina();
+        }
+
+    </script>
+
+</body>
+</html>

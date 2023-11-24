@@ -1,0 +1,68 @@
+﻿@model ContatoModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutContato.cshtml";
+}
+<div class="text-center">
+    <h1>Editar contato</h1>
+</div>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form class="needs-validation" id="Contato" novalidate method="post">
+
+                        <div class="mb-3" style="display:none">
+                            <label for="nome" class="form-label">Nome:</label>
+                            <input type="text" class="form-control" id="id" name="id" required placeholder="Digite seu nome" value="@Model.Id">
+                            <div class="invalid-feedback">
+                                Por favor, insira seu nome.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="nome" class="form-label">Nome:</label>
+                            <input type="text" class="form-control" id="nome" name="nome" required placeholder="Digite seu nome" value="@Model.Nome">
+                            <div class="invalid-feedback">
+                                Por favor, insira seu nome.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">E-mail:</label>
+                            <input type="email" class="form-control" id="email" name="email" required placeholder="Digite seu email" value="@Model.Email">
+                            <div class="invalid-feedback">
+                                Por favor, insira um endereço de e-mail válido.
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between;">
+                            <div class="mb-3" style="width:50%">
+                                <label for="cpf" class="form-label">CPF:</label>
+                                <input type="text" class="form-control" id="cpf" name="cpf" required placeholder="Ex: 999.999.999-99" value="@Model.CPF">
+                                <div class="invalid-feedback">
+                                    Por favor, insira um endereço de e-mail válido.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="senha" class="form-label">Celular:</label>
+                                <input type="text" class="form-control" id="celular" name="celular" required placeholder="Ex: (99) 99999-9999" value="@Model.Celular">
+                                <div class="invalid-feedback">
+                                    Por favor, insira uma número de celular.
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                    <div class="col-12" style="text-align:center">
+                        <button class="btn btn-success" onclick="EditarContato()">Atualizar</button>
+                        <a role="button" class="btn btn-primary" asp-controller="Contato" asp-action="Index">Voltar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
